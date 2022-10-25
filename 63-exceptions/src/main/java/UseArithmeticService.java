@@ -62,10 +62,12 @@ public final class UseArithmeticService {
          * This method should re-try to retrieve information from the provided server, catching all IOExceptions,
          * until it succeeds.
          */
-        try {
-            return server.receiveResponse();
-        } catch (final IOException e) {
-            return retryReceiveOnNetworkError(server);
+        while(true) {
+            try {
+                return server.receiveResponse();
+            } catch (final IOException e) {
+                LOG.println(e.getMessage());
+            }
         }
     }
 
