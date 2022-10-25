@@ -108,7 +108,7 @@ public final class ArithmeticService {
             throw new IllegalStateException("Illegal start of operation: " + commandQueue);
         }
         if (commandQueue.size() < 3) {
-            throw new IllegalStateException("Not enough operands: " + commandQueue);
+            throw new IllegalStateException("Inconsistent operation: " + commandQueue);
         }
         if (commandQueue.size() < operatorIndex + 1) {
             throw new IllegalStateException("Missing right operand: " + commandQueue);
