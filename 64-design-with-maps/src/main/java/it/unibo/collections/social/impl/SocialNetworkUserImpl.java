@@ -37,12 +37,9 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      * a generic-type Map:  think of what type of keys and values would best suit the requirements
      */
     
-    final String firstName;
-    final String lastName;
-    final Integer age;
-    final String username;
+    
     private int hash;
-    private final Map<String, Set<U>> followed = new HashMap<>();
+    private final Map<String, Set<U>> followed; // la map che contiene i gruppi e gli utenti che seguono
     private static final int DEFAULT_AGE = -1;
 
 
@@ -72,10 +69,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
-        this.firstName = name;
-        this.lastName = surname;
-        this.age = userAge;
-        this.username = user;
+        this.followed = new HashMap<>();
     }
 
     /*
@@ -83,11 +77,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     
     public SocialNetworkUserImpl(final String name, final String surname, final String user) {
-        super(name, surname, user);
-        this.firstName = name;
-        this.lastName = surname;
-        this.age = DEFAULT_AGE;
-        this.username = user;
+        this(name, surname, user, DEFAULT_AGE);
     }
     
     /*
@@ -97,14 +87,12 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        if (followed.containsKey(circle)) {
-            return followed.get(circle).add(user);
-        } else {
-            final Set<U> set = new HashSet<>();
-            set.add(user);
-            followed.put(circle, set);
-            return true;
+        Set <U> circleFriends = this.followed.get(circle);
+        if (circleFriends == null) {
+            circleFriends = new HashSet<>();
+            this.followed.put(circle, circleFriends);
         }
+        return circleFriends.add(user);
     }
 
     /**
@@ -114,15 +102,19 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        if (followed.containsKey(groupName)) {
-            return followed.get(groupName);
-        } else {
+       final Collection<U> circleFriends = this.followed.get(groupName);
+        if (circleFriends == null) {
             return Collections.emptyList();
         }
+        return circleFriends;
     }
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+        final List<U> list = new ArrayList<>();
+        for (final Set<U> set : followed.values()) {
+            list.addAll(set);
+        }
+        return list;
     }
 }
