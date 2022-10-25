@@ -115,6 +115,6 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
         for (final Set<U> set : followed.values()) {
             list.addAll(set);
         }
-        return list;
+        return new ArrayList<>(list);
     }
 }

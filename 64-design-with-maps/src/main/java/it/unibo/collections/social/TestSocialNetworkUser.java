@@ -56,6 +56,7 @@ public final class TestSocialNetworkUser {
         /*
          * Make people follow each other
          */
+ 
         mgladwell.addFollowedUser("acquaintances", ntaleb);
         dwashington.addFollowedUser("myths", asmith);
         dwashington.addFollowedUser(WRITERS, ntaleb);
@@ -74,11 +75,16 @@ public final class TestSocialNetworkUser {
         /*
          * Adding another friend to Denzel's "writers" group
          */
+        
+
+         
         dwashFriends.add(asmith);
         /*
          * The above operation *MUST* have no effect on Denzel's profile itself:
          * STILL TWO PEOPLE in denzel's group called writers
          */
+
+         
         assertTrue(
             "Denzel has STILL 2 followed people in group \"" + WRITERS + "\"",
             dwashington.getFollowedUsersInGroup(WRITERS).size() == 2
