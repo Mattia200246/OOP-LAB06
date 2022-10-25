@@ -114,7 +114,11 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public Collection<U> getFollowedUsersInGroup(final String groupName) {
-        return null;
+        if (followed.containsKey(groupName)) {
+            return followed.get(groupName);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @Override
