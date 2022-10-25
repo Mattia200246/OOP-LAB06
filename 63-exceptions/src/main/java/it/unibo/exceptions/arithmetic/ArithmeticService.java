@@ -58,47 +58,50 @@ public final class ArithmeticService {
         if (commandQueue.isEmpty()) {
             throw new IllegalArgumentException("No commands sent, no result available");
         }
-        while (commandQueue.size() != 1) {
-            final var nextMultiplication = commandQueue.indexOf(TIMES);
-            final var nextDivision = commandQueue.indexOf(DIVIDED);
-            final var nextPriorityOp = nextMultiplication >= 0 && nextDivision >= 0
-                ? min(nextMultiplication, nextDivision)
-                : max(nextMultiplication, nextDivision);
-            if (nextPriorityOp >= 0) {
-                computeAt(nextPriorityOp);
-            } else {
-                final var nextSum = commandQueue.indexOf(PLUS);
-                final var nextMinus = commandQueue.indexOf(MINUS);
-                final var nextOp = nextSum >= 0 && nextMinus >= 0
-                    ? min(nextSum, nextMinus)
-                    : max(nextSum, nextMinus);
-                if (nextOp != -1) {
-                    if (commandQueue.size() < 3) {
-                        throw new IllegalArgumentException("Inconsistent operation: " + commandQueue);
+        try{
+            while (commandQueue.size() != 1) {
+                final var nextMultiplication = commandQueue.indexOf(TIMES);
+                final var nextDivision = commandQueue.indexOf(DIVIDED);
+                final var nextPriorityOp = nextMultiplication >= 0 && nextDivision >= 0
+                    ? min(nextMultiplication, nextDivision)
+                    : max(nextMultiplication, nextDivision);
+                if (nextPriorityOp >= 0) {
+                    computeAt(nextPriorityOp);
+                } else {
+                    final var nextSum = commandQueue.indexOf(PLUS);
+                    final var nextMinus = commandQueue.indexOf(MINUS);
+                    final var nextOp = nextSum >= 0 && nextMinus >= 0
+                        ? min(nextSum, nextMinus)
+                        : max(nextSum, nextMinus);
+                    if (nextOp != -1) {
+                        if (commandQueue.size() < 3) {
+                            throw new IllegalArgumentException("Inconsistent operation: " + commandQueue);
+                        }
+                        computeAt(nextOp);
+                    } else if (commandQueue.size() > 1) {
+                        final String message = "Inconsistent state: " + commandQueue;
+                        throw new IllegalStateException(message);
                     }
-                    computeAt(nextOp);
-                } else if (commandQueue.size() > 1) {
-                    final String message = "Inconsistent state: " + commandQueue;
-                    throw new IllegalStateException(message);
                 }
             }
-        }
-        try {
-            final var finalResult = commandQueue.get(0);
-            final var possibleException = nullIfNumberOrException(finalResult);
-            if (possibleException != null) {
-                throw new IllegalStateException("Invalid result of operation: " + finalResult);
-            }
-            return finalResult;
-        } finally {
+
+                final var finalResult = commandQueue.get(0);
+                final var possibleException = nullIfNumberOrException(finalResult);
+                if (possibleException != null) {
+                    throw new IllegalStateException("Invalid result of operation: " + finalResult);
+                }
+                return finalResult;
+
+                /*
+            * The commandQueue should be cleared, no matter what, when the method exits
+            * But how?
+            */
+        }finally {
             commandQueue.clear();
         }
-
-        /*
-         * The commandQueue should be cleared, no matter what, when the method exits
-         * But how?
-         */
     }
+
+        
 
     private void computeAt(final int operatorIndex) {
         if (operatorIndex == 0) {
