@@ -59,11 +59,10 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
         if (KEYWORDS.contains(data) || exceptionWhenParsedAsNumber == null) {
             commandQueue.add(data);
         } else {
-            /*final var message = data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number";
+            final var message = data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number";
             commandQueue.clear();
-            throw new IllegalArgumentException(message);*/
 
-            throw new IllegalArgumentException(data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number");
+            throw new IllegalArgumentException(message, exceptionWhenParsedAsNumber);
 
 
             /*
