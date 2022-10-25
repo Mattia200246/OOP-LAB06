@@ -83,4 +83,9 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
         }
     }
 
+    private void accessTheNework() throws IOException {
+        if(randomGenerator.nextDouble() < failProbability) {
+            throw new IOException("Generic error");
+        }
+    }
 }
