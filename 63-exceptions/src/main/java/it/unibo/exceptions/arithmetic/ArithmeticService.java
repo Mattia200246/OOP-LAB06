@@ -105,18 +105,18 @@ public final class ArithmeticService {
 
     private void computeAt(final int operatorIndex) {
         if (operatorIndex == 0) {
-            throw new ArithmeticException("Illegal start of operation: " + commandQueue);
+            throw new IllegalStateException("Illegal start of operation: " + commandQueue);
         }
         if (commandQueue.size() < 3) {
-            throw new ArithmeticException("Not enough operands: " + commandQueue);
+            throw new IllegalStateException("Not enough operands: " + commandQueue);
         }
         if (commandQueue.size() < operatorIndex + 1) {
-            throw new ArithmeticException("Missing right operand: " + commandQueue);
+            throw new IllegalStateException("Missing right operand: " + commandQueue);
         }
         final var rightOperand = commandQueue.remove(operatorIndex + 1);
         final var leftOperand = commandQueue.remove(operatorIndex - 1);
         if (KEYWORDS.contains(rightOperand) || KEYWORDS.contains(leftOperand)) {
-            throw new ArithmeticException("Expected a number, but got " 
+            throw new IllegalStateException("Expected a number, but got " 
             + leftOperand + " and " + rightOperand + " in " + commandQueue);
         }
         final var right = parseDouble(rightOperand);
@@ -127,10 +127,8 @@ public final class ArithmeticService {
             case MINUS -> left - right;
             case TIMES -> left * right;
             case DIVIDED -> left / right;
-            default ->  {
-                System.out.println("Unknown operand " + operand);
-                yield Double.NaN;
-            }
+            default -> 
+                throw new IllegalStateException("Unknown operand: " + operand);
         };
         commandQueue.set(operatorIndex - 1, Double.toString(result));
     }
