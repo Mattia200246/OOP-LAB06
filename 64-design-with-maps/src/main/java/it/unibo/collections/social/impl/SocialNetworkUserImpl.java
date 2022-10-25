@@ -36,6 +36,15 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      * In order to save the people followed by a user organized in groups, adopt
      * a generic-type Map:  think of what type of keys and values would best suit the requirements
      */
+    
+    final String firstName;
+    final String lastName;
+    final Integer age;
+    final String username;
+    private int hash;
+    private final Map<String, Set<U>> followed = new HashMap<>();
+    private static final int DEFAULT_AGE = -1;
+
 
     /*
      * [CONSTRUCTORS]
@@ -62,13 +71,25 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      *            application
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
-        super(null, null, null, 0);
+        super(name, surname, user, userAge);
+        this.firstName = name;
+        this.lastName = surname;
+        this.age = userAge;
+        this.username = user;
     }
 
     /*
      * 2) Define a further constructor where the age defaults to -1
      */
-
+    
+    public SocialNetworkUserImpl(final String name, final String surname, final String user) {
+        super(name, surname, user);
+        this.firstName = name;
+        this.lastName = surname;
+        this.age = DEFAULT_AGE;
+        this.username = user;
+    }
+    
     /*
      * [METHODS]
      *
