@@ -97,7 +97,14 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
      */
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+        if (followed.containsKey(circle)) {
+            return followed.get(circle).add(user);
+        } else {
+            final Set<U> set = new HashSet<>();
+            set.add(user);
+            followed.put(circle, set);
+            return true;
+        }
     }
 
     /**
