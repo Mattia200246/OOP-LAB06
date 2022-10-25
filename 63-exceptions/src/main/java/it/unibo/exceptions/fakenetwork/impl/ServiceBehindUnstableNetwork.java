@@ -54,9 +54,12 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
         if (KEYWORDS.contains(data) || exceptionWhenParsedAsNumber == null) {
             commandQueue.add(data);
         } else {
-            final var message = data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number";
+            /*final var message = data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number";
             commandQueue.clear();
-            throw new IllegalArgumentException(message);
+            throw new IllegalArgumentException(message);*/
+
+            throw new IllegalArgumentException(data + " is not a valid keyword (allowed: " + KEYWORDS + "), nor is a number");
+
 
             /*
              * This method, in this point, should throw an IllegalStateException.
@@ -81,9 +84,11 @@ public final class ServiceBehindUnstableNetwork implements NetworkComponent {
     }
 
     private void accessTheNework(final String message) throws IOException {
+        
         if (randomGenerator.nextDouble() < failProbability) {
-            throw new IOException("Generic I/O error");
+            throw new IOException("Network error while sending " + message);
         }
+
     }
 
 }
