@@ -89,7 +89,6 @@ public final class ArithmeticService {
             if (possibleException != null) {
                 throw new IllegalStateException("Invalid result of operation: " + finalResult);
             }
-
             return finalResult;
         } finally {
             commandQueue.clear();
