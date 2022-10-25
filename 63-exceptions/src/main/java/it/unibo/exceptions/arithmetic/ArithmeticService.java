@@ -83,12 +83,18 @@ public final class ArithmeticService {
                 }
             }
         }
-        final var finalResult = commandQueue.get(0);
-        final var possibleException = nullIfNumberOrException(finalResult);
-        if (possibleException != null) {
-            throw new IllegalStateException("Invalid result of operation: " + finalResult);
+        try {
+            final var finalResult = commandQueue.get(0);
+            final var possibleException = nullIfNumberOrException(finalResult);
+            if (possibleException != null) {
+                throw new IllegalStateException("Invalid result of operation: " + finalResult);
+            }
+
+            return finalResult;
+        } finally {
+            commandQueue.clear();
         }
-        return finalResult;
+
         /*
          * The commandQueue should be cleared, no matter what, when the method exits
          * But how?
