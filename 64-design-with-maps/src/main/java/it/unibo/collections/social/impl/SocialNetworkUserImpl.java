@@ -106,7 +106,7 @@ public final class SocialNetworkUserImpl<U extends User> extends UserImpl implem
         if (circleFriends == null) {
             return Collections.emptyList();
         }
-        return circleFriends;
+        return new ArrayList<>(circleFriends);
     }
 
     @Override
