@@ -64,7 +64,7 @@ public class GraphImpl<N> implements Graph<N> {
                 graphSearch(next, target);
             }
         }
-        return path;
+        return Collections.emptyList();
     }
 
     
