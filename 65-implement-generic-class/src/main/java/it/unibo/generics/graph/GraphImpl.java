@@ -1,5 +1,7 @@
 package it.unibo.generics.graph;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -37,9 +39,32 @@ public class GraphImpl<N> implements Graph<N> {
     }
 
     @Override
-    public List getPath(Object source, Object target) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<N> getPath(N source, N target) {
+        //se il nodo esiste
+        if(edges.containsKey(source) && edges.containsKey(target)) {
+            return graphSearch(source, target);
+        }else{
+            return Collections.emptyList();
+        }
     }
+
+    private List<N> graphSearch(final N source, final N target){
+        final Set<N> visited = new HashSet<>();
+        final List<N> path = new ArrayList<>();
+        final Iterator<N> it = edges.get(source).iterator();
+        while(it.hasNext()) {
+            final N next = it.next();
+            if(!visited.contains(next)) {
+                visited.add(next);
+                path.add(next);
+                if(next.equals(target)) {
+                    return path;
+                }
+                graphSearch(next, target);
+            }
+        }
+        return path;
+    }
+
     
 }
