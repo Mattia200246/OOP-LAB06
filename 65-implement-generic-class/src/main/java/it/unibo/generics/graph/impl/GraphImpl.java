@@ -1,7 +1,6 @@
-package it.unibo.generics.graph;
+package it.unibo.generics.graph.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -19,7 +18,9 @@ public class GraphImpl<N> implements Graph<N> {
 
     @Override
     public void addNode(final N node) {
-        edges.putIfAbsent(node, new HashSet<>());
+        if (node != null) {
+            edges.putIfAbsent(node, new HashSet<>());
+        }
     }
 
     @Override
