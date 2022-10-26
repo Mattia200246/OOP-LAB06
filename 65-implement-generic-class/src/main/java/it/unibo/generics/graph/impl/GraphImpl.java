@@ -42,7 +42,6 @@ public class GraphImpl<N> implements Graph<N> {
 
     @Override
     public List<N> getPath(N source, N target) {
-        //se il nodo esiste
         if(edges.containsKey(source) && edges.containsKey(target)) {
             return graphSearch(source, target);
         }else{
