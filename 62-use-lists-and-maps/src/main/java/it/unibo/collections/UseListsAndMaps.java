@@ -139,6 +139,5 @@ public final class UseListsAndMaps {
             worldPopulation += (long) i;
         }
         System.out.println("World population: " + worldPopulation);
-
     }
 }
