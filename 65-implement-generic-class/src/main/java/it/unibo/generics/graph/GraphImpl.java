@@ -21,7 +21,6 @@ public class GraphImpl<N> implements Graph<N> {
 
     @Override
     public void addEdge(N source, N target) {
-        //add edge from source to target
         if(source != null && target != null) {
             edges.get(target).add(source);
         }
