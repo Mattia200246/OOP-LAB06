@@ -37,7 +37,7 @@ public class GraphImpl<N> implements Graph<N> {
 
     @Override
     public Set<N> linkedNodes(N node) {
-        return new HashSet<>(edges.get(node));
+        return edges.get(node);
     }
 
     @Override
