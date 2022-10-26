@@ -1,6 +1,7 @@
 package it.unibo.generics.graph;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ public class GraphImpl<N> implements Graph<N> {
     @Override
     public void addNode(final N node) {
         edges.putIfAbsent(node, new HashSet<>());
-    
     }
 
     @Override
@@ -32,9 +32,8 @@ public class GraphImpl<N> implements Graph<N> {
     }
 
     @Override
-    public Set<N> linkedNodes(Object node) {
-        // TODO Auto-generated method stub
-        return null;
+    public Set<N> linkedNodes(N node) {
+        return new HashSet<>(edges.get(node));
     }
 
     @Override
