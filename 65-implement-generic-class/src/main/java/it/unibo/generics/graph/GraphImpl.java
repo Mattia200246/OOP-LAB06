@@ -20,9 +20,11 @@ public class GraphImpl<N> implements Graph<N> {
     }
 
     @Override
-    public void addEdge(Object source, Object target) {
-        // TODO Auto-generated method stub
-        
+    public void addEdge(N source, N target) {
+        //add edge from source to target
+        if(source != null && target != null) {
+            edges.get(target).add(source);
+        }
     }
 
     @Override
